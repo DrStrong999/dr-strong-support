@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Support — Dr Strong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F6F0;
+    --surface: #FFFFFF;
+    --ink: #10201A;
+    --ink-soft: #5B6B62;
+    --track: #E7ECE2;
+    --accent-from: #16A34A;
+    --accent-to: #84CC16;
+    --accent-solid: #16A34A;
+    --accent-soft: #E4F5DE;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.85;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+    padding: 56px 20px 72px 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+  .logo-badge {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0F5C4C, #16A34A);
+    margin: 0 auto 18px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .logo-badge svg { width: 38px; height: 38px; }
+  .badge-dot {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #EF4444;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .badge-dot svg { width: 12px; height: 12px; }
+  h1.app-title {
+    font-family: 'Lalezar', sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.5px;
+  }
+  .hero p { margin: 0; opacity: 0.92; font-size: 15px; }
+  .wrap {
+    max-width: 760px;
+    margin: -40px auto 60px auto;
+    padding: 0 20px;
+  }
+  .card {
+    background: var(--surface);
+    border-radius: 28px;
+    padding: 36px 32px;
+    box-shadow: 0 12px 40px rgba(16,32,26,0.08);
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 36px 0 12px 0;
+    padding-top: 4px;
+  }
+  h2:first-of-type { margin-top: 0; }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+    flex-shrink: 0;
+  }
+  p { color: var(--ink); font-size: 15px; margin: 10px 0; }
+  ul { margin: 10px 0; padding-inline-start: 22px; }
+  li { margin-bottom: 10px; font-size: 15px; }
+  .contact-box {
+    background: var(--accent-soft);
+    border-radius: 20px;
+    padding: 28px 24px;
+    margin: 24px 0 8px 0;
+    text-align: center;
+  }
+  .contact-box .label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .contact-box a.email {
+    color: var(--accent-solid);
+    font-weight: 800;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  .contact-box .response-note {
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  footer {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    padding: 20px;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid var(--track);
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="logo-badge">
+      <div class="badge-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      </div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>
+      </svg>
+    </div>
+    <h1 class="app-title">Dr Strong</h1>
+    <p>Support</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <p>
+        Need help with the "Dr Strong" app, found a bug, or have a suggestion? We're happy to help — reach out any time.
+      </p>
+
+      <div class="contact-box">
+        <div class="label">Email Support</div>
+        <a class="email" href="mailto:Dr.strong7@outlook.com">Dr.strong7@outlook.com</a>
+        <div class="response-note">We typically respond within 1–2 business days.</div>
+      </div>
+
+      <h2><span class="dot"></span>Frequently Asked Questions</h2>
+
+      <p><strong>How do I reset my password?</strong><br>
+      Open the app, go to Settings → tap "Change Password" and follow the steps. If you're signed out and can't get back in, email us and we'll help you regain access.</p>
+
+      <p><strong>How do I delete my account and data?</strong><br>
+      Email us at the address above with the subject "Delete my account" from the email linked to your account, and we'll permanently remove your data within a few business days.</p>
+
+      <p><strong>Why does the app ask for camera or photo access?</strong><br>
+      Camera access is used only when you choose to snap a photo of your meal for AI-based calorie estimation. Photo library access is used only if you pick an existing photo instead. Nothing is captured without your action.</p>
+
+      <p><strong>Is my health data private?</strong><br>
+      Yes. Your data is tied to your account only and is never sold. See our <a href="https://drstrong999.github.io/dr-strong-privacy/" style="color: var(--accent-solid); font-weight: 700;">Privacy Policy</a> for full details.</p>
+
+      <hr>
+
+      <p style="text-align:center; color: var(--ink-soft); font-size: 14px;">
+        For anything else — feedback, feature requests, or a bug report — just send us an email. We read every message.
+      </p>
+
+    </div>
+  </div>
+
+  <footer>© 2026 Dr Strong. All rights reserved.</footer>
+
+</body>
+</html>
