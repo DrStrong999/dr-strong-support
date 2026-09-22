@@ -1,196 +1,492 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Support — Dr Strong</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=Lalezar&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr Strong — Support</title>
+<meta name="description" content="Dr Strong support: contact, account deletion, data export, language, Apple Health, step groups.">
 <style>
-  :root {
-    --bg: #F4F6F0;
-    --surface: #FFFFFF;
-    --ink: #10201A;
-    --ink-soft: #5B6B62;
-    --track: #E7ECE2;
-    --accent-from: #16A34A;
-    --accent-to: #84CC16;
-    --accent-solid: #16A34A;
-    --accent-soft: #E4F5DE;
-  }
+  :root { --ink:#16202b; --soft:#5b6b7c; --line:#e3e9ef; --bg:#fbfcfd; --accent:#0f8a6a; --tint:#e8f4f0; }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'IBM Plex Sans', sans-serif;
-    line-height: 1.85;
+    margin: 0; padding: 28px 18px 80px; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+    line-height: 1.8; font-size: 16px;
   }
-  .hero {
-    background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
-    padding: 56px 20px 72px 20px;
-    text-align: center;
-    color: white;
-    position: relative;
+  main { max-width: 720px; margin: 0 auto; }
+
+  /* لغةٌ واحدة ظاهرة. الإنجليزيّة ما لم يُشِر العنوان إلى غيرها (#ar، #fr…).
+     CSS وحده، بلا JavaScript -- ولهذا تأتي #en آخرَ الأقسام في الصفحة. */
+  section.lang { display: none; scroll-margin-top: 28px; }
+  section.lang:target, #en { display: block; }
+  section.lang:target ~ #en { display: none; }
+
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .brand { font-size: 15px; font-weight: 800; color: var(--accent); letter-spacing: .02em; }
+
+  .langmenu { position: relative; }
+  .langmenu summary {
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+    font-size: 14.5px; font-weight: 700; padding: 5px 13px; border-radius: 999px;
+    border: 1.5px solid var(--accent); color: var(--accent); background: #fff; white-space: nowrap;
   }
-  .logo-badge {
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0F5C4C, #16A34A);
-    margin: 0 auto 18px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-    position: relative;
+  .langmenu summary::-webkit-details-marker { display: none; }
+  .langmenu summary::after {
+    content: ""; width: 6px; height: 6px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-2px); margin-inline-start: 2px;
   }
-  .logo-badge svg { width: 38px; height: 38px; }
-  .badge-dot {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #EF4444;
-    border: 3px solid white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .langmenu[open] summary { background: var(--tint); }
+  .langmenu summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .langmenu ul {
+    position: absolute; inset-inline-end: 0; top: calc(100% + 6px); z-index: 5; margin: 0; padding: 6px;
+    list-style: none; background: #fff; border: 1px solid var(--line); border-radius: 12px; min-width: 190px;
+    box-shadow: 0 10px 28px rgba(22, 32, 43, .12);
   }
-  .badge-dot svg { width: 12px; height: 12px; }
-  h1.app-title {
-    font-family: 'Lalezar', sans-serif;
-    font-weight: 400;
-    font-size: 40px;
-    margin: 0 0 6px 0;
-    letter-spacing: 0.5px;
+  .langmenu li a {
+    display: block; padding: 7px 11px; border-radius: 8px; color: var(--ink); text-decoration: none; font-size: 15px;
   }
-  .hero p { margin: 0; opacity: 0.92; font-size: 15px; }
-  .wrap {
-    max-width: 760px;
-    margin: -40px auto 60px auto;
-    padding: 0 20px;
+  .langmenu li a:hover, .langmenu li a:focus-visible { background: var(--tint); outline: none; }
+  .langmenu li a[aria-current] { color: var(--accent); font-weight: 700; }
+
+  h1 { font-size: 30px; line-height: 1.3; margin: 2px 0 6px; }
+  .lede { color: var(--soft); margin: 0 0 22px; }
+  h3 { font-size: 17px; margin: 30px 0 6px; }
+  p { margin: 6px 0; }
+  a { color: var(--accent); }
+  a:focus-visible, .mail:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  .contact { border: 2px solid var(--accent); border-radius: 16px; padding: 16px 18px; margin: 0 0 8px; background: #fff; }
+  .contact p { margin: 0; color: var(--soft); font-size: 15px; }
+  .mail { display: inline-block; font-size: 20px; font-weight: 700; margin-top: 4px; word-break: break-all; }
+
+  /* مسار الضغط: أسماء أزرار التطبيق كما تظهر، بالترتيب */
+  .path { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 4px; padding: 0; list-style: none; }
+  .path li { display: flex; align-items: center; gap: 6px; }
+  .tap {
+    display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 14.5px; font-weight: 600;
+    background: var(--tint); color: #0b5e49; border: 1px solid #c5e3d9; white-space: nowrap;
   }
-  .card {
-    background: var(--surface);
-    border-radius: 28px;
-    padding: 36px 32px;
-    box-shadow: 0 12px 40px rgba(16,32,26,0.08);
+  .path li + li::before {
+    content: ""; width: 7px; height: 7px; border-top: 2px solid var(--soft); border-left: 2px solid var(--soft);
+    transform: rotate(-45deg); margin: 0 3px;
   }
-  h2 {
-    font-size: 20px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 36px 0 12px 0;
-    padding-top: 4px;
-  }
-  h2:first-of-type { margin-top: 0; }
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-from), var(--accent-to));
-    flex-shrink: 0;
-  }
-  p { color: var(--ink); font-size: 15px; margin: 10px 0; }
-  ul { margin: 10px 0; padding-inline-start: 22px; }
-  li { margin-bottom: 10px; font-size: 15px; }
-  .contact-box {
-    background: var(--accent-soft);
-    border-radius: 20px;
-    padding: 28px 24px;
-    margin: 24px 0 8px 0;
-    text-align: center;
-  }
-  .contact-box .label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-  .contact-box a.email {
-    color: var(--accent-solid);
-    font-weight: 800;
-    font-size: 20px;
-    text-decoration: none;
-  }
-  .contact-box .response-note {
-    margin-top: 10px;
-    font-size: 13.5px;
-    color: var(--ink-soft);
-  }
-  footer {
-    text-align: center;
-    color: var(--ink-soft);
-    font-size: 13px;
-    padding: 20px;
-  }
-  hr {
-    border: none;
-    border-top: 1px solid var(--track);
-    margin: 32px 0;
-  }
+  [dir="ltr"] .path li + li::before { transform: rotate(135deg); }
+
+  .foot { color: var(--soft); font-size: 13px; margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--line); }
+  @media (max-width: 480px) { h1 { font-size: 26px; } .mail { font-size: 18px; } }
 </style>
 </head>
 <body>
-
-  <div class="hero">
-    <div class="logo-badge">
-      <div class="badge-dot">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-      </div>
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/>
-      </svg>
+<main>
+  <section class="lang" id="ar" lang="ar" dir="rtl">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="اللغة"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>العربية</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar" aria-current="true">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>الدعم</h1>
+    <p class="lede">إجاباتٌ لأكثر ما يُسأل عنه، وطريقة التواصل معنا.</p>
+    <div class="contact">
+      <p>راسلنا على</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>اذكر نوع جهازك وما حدث بالضبط، فهذا يسرّع الحلّ.</p>
     </div>
-    <h1 class="app-title">Dr Strong</h1>
-    <p>Support</p>
-  </div>
-
-  <div class="wrap">
-    <div class="card">
-
-      <p>
-        Need help with the "Dr Strong" app, found a bug, or have a suggestion? We're happy to help — reach out any time.
-      </p>
-
-      <div class="contact-box">
-        <div class="label">Email Support</div>
-        <a class="email" href="mailto:Dr.strong7@outlook.com">Dr.strong7@outlook.com</a>
-        <div class="response-note">We typically respond within 1–2 business days.</div>
-      </div>
-
-      <h2><span class="dot"></span>Frequently Asked Questions</h2>
-
-      <p><strong>How do I reset my password?</strong><br>
-      Open the app, go to Settings → tap "Change Password" and follow the steps. If you're signed out and can't get back in, email us and we'll help you regain access.</p>
-
-      <p><strong>How do I delete my account and data?</strong><br>
-      Email us at the address above with the subject "Delete my account" from the email linked to your account, and we'll permanently remove your data within a few business days.</p>
-
-      <p><strong>Why does the app ask for camera or photo access?</strong><br>
-      Camera access is used only when you choose to snap a photo of your meal for AI-based calorie estimation. Photo library access is used only if you pick an existing photo instead. Nothing is captured without your action.</p>
-
-      <p><strong>Is my health data private?</strong><br>
-      Yes. Your data is tied to your account only and is never sold. See our <a href="https://drstrong999.github.io/dr-strong-privacy/" style="color: var(--accent-solid); font-weight: 700;">Privacy Policy</a> for full details.</p>
-
-      <hr>
-
-      <p style="text-align:center; color: var(--ink-soft); font-size: 14px;">
-        For anything else — feedback, feature requests, or a bug report — just send us an email. We read every message.
-      </p>
-
+    <h3>نسيت كلمة المرور</h3>
+    <ol class="path" aria-label="المسار"><li><span class="tap">المتابعة بالبريد الإلكتروني</span></li><li><span class="tap">اكتب بريدك</span></li><li><span class="tap">نسيت كلمة المرور؟</span></li></ol>
+    <p>يرسل التطبيق إلى بريدك رابطًا لتعيين كلمة مرورٍ جديدة، فتحقّق من البريد العشوائيّ أيضًا. ومن يدخل بحساب Apple أو Google ليست له كلمة مرورٍ هنا، فليستعمل الزرّ نفسه مرّةً أخرى.</p>
+    <h3>كيف أحذف حسابي؟</h3>
+    <ol class="path" aria-label="المسار"><li><span class="tap">المزيد</span></li><li><span class="tap">أيقونة الشخص</span></li><li><span class="tap">حذف الحساب</span></li></ol>
+    <p>أيقونة الشخص في أعلى تبويب «المزيد»، وتفتح «الملف الشخصي». الحذف نهائيّ، وما يُحذف وما يبقى مذكورٌ في <a href="https://drstrong999.github.io/dr-strong-privacy/">سياسة الخصوصية</a> (بالإنجليزيّة).</p>
+    <h3>كيف أحصل على نسخةٍ من بياناتي؟</h3>
+    <ol class="path" aria-label="المسار"><li><span class="tap">المزيد</span></li><li><span class="tap">أيقونة الترس</span></li><li><span class="tap">الخصوصية</span></li><li><span class="tap">تصدير بياناتي</span></li></ol>
+    <p>يصنع التطبيق ملفًّا بصيغة JSON فيه بياناتك، ويفتح لك نافذة المشاركة لتحفظه أو ترسله حيث شئت.</p>
+    <h3>كيف أغيّر اللغة؟</h3>
+    <ol class="path" aria-label="المسار"><li><span class="tap">المزيد</span></li><li><span class="tap">أيقونة الترس</span></li><li><span class="tap">اللغة</span></li></ol>
+    <p>التطبيق متاحٌ باثنتي عشرة لغة.</p>
+    <h3>خطواتي لا تظهر من Apple Health</h3>
+    <p>عدّاد الخطوات يعمل من مستشعر الحركة في الجوال حتى دون Apple Health. ولتسمح للتطبيق بقراءة Apple Health:</p>
+    <ol class="path" aria-label="المسار"><li><span class="tap">تطبيق صحة</span></li><li><span class="tap">صورتك الشخصيّة</span></li><li><span class="tap">التطبيقات</span></li><li><span class="tap">Dr Strong</span></li></ol>
+    <p>ثمّ فعّل ما تريد مشاركته. التطبيق يقرأ من Apple Health فقط، ولا يكتب فيه شيئًا.</p>
+    <h3>لماذا يطلب التطبيق الكاميرا أو الصور أو الحركة؟</h3>
+    <p>لكل إذنٍ ميزةٌ واحدة، ويسأل iOS عنه أوّل مرّةٍ تحتاجه تلك الميزة. الكاميرا لمسح الباركود على الأطعمة المعلّبة. والصور لاختيار صورتك الشخصيّة. والحركة لعدّ خطواتك. وApple Health ليقرأ التطبيق خطواتك ومسافتك. ورفض إذنٍ يوقف ميزته وحدها.</p>
+    <h3>«مقارنتي بالمستخدمين» تقول: عُد غدًا</h3>
+    <p>المقارنة تُحسب مرّةً كل يوم، صباحًا. فالحساب الجديد يظهر ترتيبه بعد أوّل حسابٍ يوميٍّ يأتي بعد إنشائه.</p>
+    <h3>كيف تعمل مجموعات المشي؟</h3>
+    <p>تنضمّ إلى مجموعةٍ برابط دعوة، ومؤسّس المجموعة يوافق على كل طلب. الأعضاء يرون اسمك وأرقام خطواتك فقط. المؤسّس يستطيع إزالة أيّ عضو، وأيّ عضوٍ يستطيع المغادرة متى شاء.</p>
+    <h3>هل التطبيق طبّي؟</h3>
+    <p>لا. Dr Strong يقدّم إرشاداتٍ عامّة لعاداتٍ صحّيّة، وليس جهازًا طبّيًّا، ولا يغني عن الطبيب أو أخصائيّ التغذية. النطاقات المرجعيّة للتحاليل إرشاديّة، وكلٌّ منها يذكر مصدره.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">سياسة الخصوصية (بالإنجليزيّة)</a></p>
+  </section>
+  <section class="lang" id="fr" lang="fr" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Langue"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Français</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr" aria-current="true">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Assistance</h1>
+    <p class="lede">Les réponses aux questions les plus fréquentes, et comment nous joindre.</p>
+    <div class="contact">
+      <p>Écrivez-nous à</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Indiquez votre appareil et ce qui s&#x27;est passé exactement : vous aurez une réponse plus vite.</p>
     </div>
-  </div>
-
-  <footer>© 2026 Dr Strong. All rights reserved.</footer>
-
+    <h3>J&#x27;ai oublié mon mot de passe</h3>
+    <ol class="path" aria-label="Chemin"><li><span class="tap">Continuer avec l&#x27;e-mail</span></li><li><span class="tap">Saisissez votre e-mail</span></li><li><span class="tap">Mot de passe oublié ?</span></li></ol>
+    <p>L&#x27;app vous envoie par e-mail un lien pour définir un nouveau mot de passe ; vérifiez aussi vos courriers indésirables. Si vous vous connectez avec Apple ou Google, votre compte n&#x27;a pas de mot de passe ici : utilisez à nouveau le même bouton.</p>
+    <h3>Comment supprimer mon compte ?</h3>
+    <ol class="path" aria-label="Chemin"><li><span class="tap">Plus</span></li><li><span class="tap">Icône de personne</span></li><li><span class="tap">Supprimer le compte</span></li></ol>
+    <p>L&#x27;icône de personne se trouve en haut de l&#x27;onglet « Plus » et ouvre votre « Profil ». La suppression est définitive ; ce qui est supprimé et ce qui reste est décrit dans la <a href="https://drstrong999.github.io/dr-strong-privacy/">politique de confidentialité</a> (en anglais).</p>
+    <h3>Comment obtenir une copie de mes données ?</h3>
+    <ol class="path" aria-label="Chemin"><li><span class="tap">Plus</span></li><li><span class="tap">Icône d&#x27;engrenage</span></li><li><span class="tap">Confidentialité</span></li><li><span class="tap">Exporter mes données</span></li></ol>
+    <p>L&#x27;app crée un fichier JSON contenant vos données et ouvre la feuille de partage, pour que vous puissiez l&#x27;enregistrer ou l&#x27;envoyer où vous voulez.</p>
+    <h3>Comment changer de langue ?</h3>
+    <ol class="path" aria-label="Chemin"><li><span class="tap">Plus</span></li><li><span class="tap">Icône d&#x27;engrenage</span></li><li><span class="tap">Langue</span></li></ol>
+    <p>L&#x27;app est disponible en douze langues.</p>
+    <h3>Mes pas n&#x27;apparaissent pas depuis l&#x27;app Santé</h3>
+    <p>Le compteur de pas fonctionne avec le capteur de mouvement de votre iPhone, même sans l&#x27;app Santé. Pour autoriser l&#x27;app à lire vos données Santé : ouvrez l&#x27;app Santé d&#x27;Apple, touchez votre photo de profil, ouvrez la liste des apps dans la section Confidentialité, choisissez Dr Strong et activez ce que vous souhaitez partager. L&#x27;app lit seulement les données Santé ; elle n&#x27;y écrit jamais.</p>
+    <h3>Pourquoi l&#x27;app demande-t-elle l&#x27;appareil photo, les photos ou les mouvements ?</h3>
+    <p>Chaque autorisation sert une seule fonction, et iOS la demande la première fois que cette fonction en a besoin. L&#x27;appareil photo scanne les codes-barres des aliments emballés. Les photos vous permettent de choisir une photo de profil. Les mouvements comptent vos pas. L&#x27;app Santé permet à l&#x27;app de lire vos pas et votre distance. Refuser une autorisation ne désactive que sa fonction.</p>
+    <h3>« Comparaison avec les autres » : pourquoi pas encore de classement ?</h3>
+    <p>Le classement est calculé une fois par jour, le matin. Un nouveau compte obtient son classement après le premier calcul quotidien qui suit sa création.</p>
+    <h3>Comment fonctionnent les groupes de pas ?</h3>
+    <p>Vous rejoignez un groupe grâce à un lien d&#x27;invitation, et le fondateur du groupe approuve chaque demande. Les membres ne voient que votre nom et vos chiffres de pas. Le fondateur peut retirer n&#x27;importe quel membre, et chaque membre peut partir à tout moment.</p>
+    <h3>Est-ce une app médicale ?</h3>
+    <p>Non. Dr Strong donne des conseils généraux pour de saines habitudes. Ce n&#x27;est pas un dispositif médical et il ne remplace ni un médecin ni un diététicien. Les plages de référence des analyses sont indicatives, et chacune cite sa source.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Politique de confidentialité (en anglais)</a></p>
+  </section>
+  <section class="lang" id="es" lang="es" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Idioma"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Español</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es" aria-current="true">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Soporte</h1>
+    <p class="lede">Respuestas a las preguntas más frecuentes y cómo contactarnos.</p>
+    <div class="contact">
+      <p>Escríbenos a</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Indica tu dispositivo y qué ocurrió exactamente; así la respuesta llega antes.</p>
+    </div>
+    <h3>Olvidé mi contraseña</h3>
+    <ol class="path" aria-label="Ruta"><li><span class="tap">Continuar con correo electrónico</span></li><li><span class="tap">Escribe tu correo</span></li><li><span class="tap">¿Olvidaste tu contraseña?</span></li></ol>
+    <p>La app te envía un enlace por correo para crear una contraseña nueva; revisa también la carpeta de correo no deseado. Si inicias sesión con Apple o Google, tu cuenta no tiene contraseña aquí: usa el mismo botón otra vez.</p>
+    <h3>¿Cómo elimino mi cuenta?</h3>
+    <ol class="path" aria-label="Ruta"><li><span class="tap">Más</span></li><li><span class="tap">Icono de persona</span></li><li><span class="tap">Eliminar cuenta</span></li></ol>
+    <p>El icono de persona está en la parte superior de la pestaña «Más» y abre tu «Perfil». La eliminación es permanente; lo que se elimina y lo que se conserva se explica en la <a href="https://drstrong999.github.io/dr-strong-privacy/">política de privacidad</a> (en inglés).</p>
+    <h3>¿Cómo obtengo una copia de mis datos?</h3>
+    <ol class="path" aria-label="Ruta"><li><span class="tap">Más</span></li><li><span class="tap">Icono de engranaje</span></li><li><span class="tap">Privacidad</span></li><li><span class="tap">Exportar mis datos</span></li></ol>
+    <p>La app genera un archivo JSON con tus datos y abre la hoja para compartir, para que lo guardes o lo envíes donde quieras.</p>
+    <h3>¿Cómo cambio el idioma?</h3>
+    <ol class="path" aria-label="Ruta"><li><span class="tap">Más</span></li><li><span class="tap">Icono de engranaje</span></li><li><span class="tap">Idioma</span></li></ol>
+    <p>La app está disponible en doce idiomas.</p>
+    <h3>Mis pasos no aparecen desde la app Salud</h3>
+    <p>El contador de pasos funciona con el sensor de movimiento del iPhone incluso sin la app Salud. Para permitir que la app lea tus datos de Salud: abre la app Salud de Apple, toca tu foto de perfil, abre la lista de apps en la sección Privacidad, elige Dr Strong y activa lo que quieras compartir. La app solo lee datos de Salud; nunca escribe en ella.</p>
+    <h3>¿Por qué la app pide la cámara, las fotos o el movimiento?</h3>
+    <p>Cada permiso sirve para una sola función, y iOS lo pide la primera vez que esa función lo necesita. La cámara escanea códigos de barras de alimentos envasados. Las fotos te permiten elegir una foto de perfil. El movimiento cuenta tus pasos. La app Salud permite que la app lea tus pasos y tu distancia. Rechazar un permiso solo desactiva su función.</p>
+    <h3>«Comparación con otros»: ¿por qué aún no hay clasificación?</h3>
+    <p>La clasificación se calcula una vez al día, por la mañana. Una cuenta nueva obtiene su clasificación tras el primer cálculo diario posterior a su creación.</p>
+    <h3>¿Cómo funcionan los grupos de pasos?</h3>
+    <p>Te unes a un grupo con un enlace de invitación, y el fundador del grupo aprueba cada solicitud. Los miembros solo ven tu nombre y tus cifras de pasos. El fundador puede eliminar a cualquier miembro, y cualquier miembro puede salir cuando quiera.</p>
+    <h3>¿Es una app médica?</h3>
+    <p>No. Dr Strong ofrece orientación general para hábitos saludables. No es un dispositivo médico y no sustituye a un médico ni a un dietista. Los rangos de referencia de los análisis son orientativos, y cada uno indica su fuente.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Política de privacidad (en inglés)</a></p>
+  </section>
+  <section class="lang" id="pt" lang="pt-BR" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Idioma"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Português</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR" aria-current="true">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Suporte</h1>
+    <p class="lede">Respostas às perguntas mais comuns e como falar conosco.</p>
+    <div class="contact">
+      <p>Escreva para</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Informe seu aparelho e o que aconteceu exatamente; assim a resposta chega mais rápido.</p>
+    </div>
+    <h3>Esqueci minha senha</h3>
+    <ol class="path" aria-label="Caminho"><li><span class="tap">Continuar com e-mail</span></li><li><span class="tap">Digite seu e-mail</span></li><li><span class="tap">Esqueceu a senha?</span></li></ol>
+    <p>O app envia para seu e-mail um link para criar uma nova senha; confira também a pasta de spam. Se você entra com Apple ou Google, sua conta não tem senha aqui: use o mesmo botão de novo.</p>
+    <h3>Como excluo minha conta?</h3>
+    <ol class="path" aria-label="Caminho"><li><span class="tap">Mais</span></li><li><span class="tap">Ícone de pessoa</span></li><li><span class="tap">Excluir conta</span></li></ol>
+    <p>O ícone de pessoa fica no topo da aba “Mais” e abre seu “Perfil”. A exclusão é permanente; o que é excluído e o que permanece está descrito na <a href="https://drstrong999.github.io/dr-strong-privacy/">política de privacidade</a> (em inglês).</p>
+    <h3>Como obtenho uma cópia dos meus dados?</h3>
+    <ol class="path" aria-label="Caminho"><li><span class="tap">Mais</span></li><li><span class="tap">Ícone de engrenagem</span></li><li><span class="tap">Privacidade</span></li><li><span class="tap">Exportar meus dados</span></li></ol>
+    <p>O app gera um arquivo JSON com seus dados e abre a folha de compartilhamento, para você salvar ou enviar para onde quiser.</p>
+    <h3>Como mudo o idioma?</h3>
+    <ol class="path" aria-label="Caminho"><li><span class="tap">Mais</span></li><li><span class="tap">Ícone de engrenagem</span></li><li><span class="tap">Idioma</span></li></ol>
+    <p>O app está disponível em doze idiomas.</p>
+    <h3>Meus passos não aparecem do app Saúde</h3>
+    <p>O contador de passos funciona com o sensor de movimento do iPhone mesmo sem o app Saúde. Para permitir que o app leia seus dados do Saúde: abra o app Saúde da Apple, toque na sua foto de perfil, abra a lista de apps na seção Privacidade, escolha Dr Strong e ative o que quiser compartilhar. O app apenas lê dados do Saúde; nunca grava nele.</p>
+    <h3>Por que o app pede a câmera, as fotos ou o movimento?</h3>
+    <p>Cada permissão serve a um único recurso, e o iOS pede na primeira vez que esse recurso precisa dela. A câmera lê códigos de barras de alimentos embalados. As fotos permitem escolher uma foto de perfil. O movimento conta seus passos. O app Saúde permite que o app leia seus passos e sua distância. Recusar uma permissão desativa apenas o seu recurso.</p>
+    <h3>“Comparação com outros”: por que ainda não há classificação?</h3>
+    <p>A classificação é calculada uma vez por dia, pela manhã. Uma conta nova recebe sua classificação após o primeiro cálculo diário depois de sua criação.</p>
+    <h3>Como funcionam os grupos de passos?</h3>
+    <p>Você entra em um grupo por um link de convite, e o fundador do grupo aprova cada pedido. Os membros veem apenas seu nome e seus números de passos. O fundador pode remover qualquer membro, e qualquer membro pode sair quando quiser.</p>
+    <h3>É um app médico?</h3>
+    <p>Não. O Dr Strong oferece orientações gerais para hábitos saudáveis. Não é um dispositivo médico e não substitui um médico ou nutricionista. As faixas de referência dos exames são orientativas, e cada uma indica sua fonte.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Política de privacidade (em inglês)</a></p>
+  </section>
+  <section class="lang" id="de" lang="de" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Sprache"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Deutsch</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de" aria-current="true">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Support</h1>
+    <p class="lede">Antworten auf die häufigsten Fragen – und wie Sie uns erreichen.</p>
+    <div class="contact">
+      <p>Schreiben Sie uns an</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Nennen Sie Ihr Gerät und was genau passiert ist – so bekommen Sie schneller eine Antwort.</p>
+    </div>
+    <h3>Ich habe mein Passwort vergessen</h3>
+    <ol class="path" aria-label="Pfad"><li><span class="tap">Mit E-Mail fortfahren</span></li><li><span class="tap">E-Mail eingeben</span></li><li><span class="tap">Passwort vergessen?</span></li></ol>
+    <p>Die App schickt Ihnen per E-Mail einen Link, um ein neues Passwort festzulegen; prüfen Sie auch den Spam-Ordner. Wenn Sie sich mit Apple oder Google anmelden, hat Ihr Konto hier kein Passwort – verwenden Sie einfach wieder dieselbe Taste.</p>
+    <h3>Wie lösche ich mein Konto?</h3>
+    <ol class="path" aria-label="Pfad"><li><span class="tap">Mehr</span></li><li><span class="tap">Personensymbol</span></li><li><span class="tap">Konto löschen</span></li></ol>
+    <p>Das Personensymbol befindet sich oben im Tab „Mehr“ und öffnet Ihr „Profil“. Das Löschen ist endgültig; was gelöscht wird und was bleibt, steht in der <a href="https://drstrong999.github.io/dr-strong-privacy/">Datenschutzerklärung</a> (auf Englisch).</p>
+    <h3>Wie erhalte ich eine Kopie meiner Daten?</h3>
+    <ol class="path" aria-label="Pfad"><li><span class="tap">Mehr</span></li><li><span class="tap">Zahnradsymbol</span></li><li><span class="tap">Datenschutz</span></li><li><span class="tap">Meine Daten exportieren</span></li></ol>
+    <p>Die App erstellt eine JSON-Datei mit Ihren Daten und öffnet das Teilen-Menü, damit Sie sie speichern oder senden können, wohin Sie möchten.</p>
+    <h3>Wie ändere ich die Sprache?</h3>
+    <ol class="path" aria-label="Pfad"><li><span class="tap">Mehr</span></li><li><span class="tap">Zahnradsymbol</span></li><li><span class="tap">Sprache</span></li></ol>
+    <p>Die App ist in zwölf Sprachen verfügbar.</p>
+    <h3>Meine Schritte kommen nicht aus der Health-App an</h3>
+    <p>Der Schrittzähler funktioniert mit dem Bewegungssensor Ihres iPhone auch ohne die Health-App. Damit die App Ihre Health-Daten lesen darf: Öffnen Sie die Health-App von Apple, tippen Sie auf Ihr Profilbild, öffnen Sie unter Datenschutz die Liste der Apps, wählen Sie Dr Strong und aktivieren Sie, was Sie teilen möchten. Die App liest Health-Daten nur; sie schreibt nie hinein.</p>
+    <h3>Warum fragt die App nach Kamera, Fotos oder Bewegung?</h3>
+    <p>Jede Berechtigung dient genau einer Funktion, und iOS fragt beim ersten Mal, wenn diese Funktion sie braucht. Die Kamera scannt Barcodes auf verpackten Lebensmitteln. Fotos brauchen Sie, um ein Profilbild auszuwählen. Bewegung zählt Ihre Schritte. Die Health-App lässt die App Ihre Schritte und Ihre Strecke lesen. Wer eine Berechtigung ablehnt, schaltet nur die zugehörige Funktion ab.</p>
+    <h3>„Vergleich mit anderen“: Warum noch keine Rangliste?</h3>
+    <p>Die Rangliste wird einmal täglich am Morgen berechnet. Ein neues Konto erhält seinen Rang nach der ersten täglichen Berechnung nach seiner Erstellung.</p>
+    <h3>Wie funktionieren Schrittgruppen?</h3>
+    <p>Sie treten einer Gruppe über einen Einladungslink bei, und der Gründer der Gruppe bestätigt jede Anfrage. Mitglieder sehen nur Ihren Namen und Ihre Schrittzahlen. Der Gründer kann jedes Mitglied entfernen, und jedes Mitglied kann die Gruppe jederzeit verlassen.</p>
+    <h3>Ist das eine medizinische App?</h3>
+    <p>Nein. Dr Strong gibt allgemeine Hinweise für gesunde Gewohnheiten. Die App ist kein Medizinprodukt und ersetzt weder Arzt noch Ernährungsberatung. Die Referenzbereiche für Laborwerte dienen der Orientierung, und jeder nennt seine Quelle.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Datenschutzerklärung (auf Englisch)</a></p>
+  </section>
+  <section class="lang" id="ru" lang="ru" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Язык"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Русский</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru" aria-current="true">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Поддержка</h1>
+    <p class="lede">Ответы на самые частые вопросы и как с нами связаться.</p>
+    <div class="contact">
+      <p>Пишите нам на</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Укажите ваше устройство и что именно произошло — так ответ придёт быстрее.</p>
+    </div>
+    <h3>Я забыл пароль</h3>
+    <ol class="path" aria-label="Путь"><li><span class="tap">Продолжить с почтой</span></li><li><span class="tap">Введите e-mail</span></li><li><span class="tap">Забыли пароль?</span></li></ol>
+    <p>Приложение пришлёт на почту ссылку, чтобы задать новый пароль; проверьте и папку «Спам». Если вы входите через Apple или Google, пароля в приложении у вас нет — просто снова нажмите ту же кнопку.</p>
+    <h3>Как удалить аккаунт?</h3>
+    <ol class="path" aria-label="Путь"><li><span class="tap">Ещё</span></li><li><span class="tap">Значок человека</span></li><li><span class="tap">Удалить аккаунт</span></li></ol>
+    <p>Значок человека находится вверху вкладки «Ещё» и открывает ваш «Профиль». Удаление необратимо; что удаляется, а что остаётся, описано в <a href="https://drstrong999.github.io/dr-strong-privacy/">политике конфиденциальности</a> (на английском).</p>
+    <h3>Как получить копию своих данных?</h3>
+    <ol class="path" aria-label="Путь"><li><span class="tap">Ещё</span></li><li><span class="tap">Значок шестерёнки</span></li><li><span class="tap">Конфиденциальность</span></li><li><span class="tap">Экспортировать мои данные</span></li></ol>
+    <p>Приложение создаёт файл JSON с вашими данными и открывает меню «Поделиться», чтобы вы могли сохранить его или отправить куда угодно.</p>
+    <h3>Как сменить язык?</h3>
+    <ol class="path" aria-label="Путь"><li><span class="tap">Ещё</span></li><li><span class="tap">Значок шестерёнки</span></li><li><span class="tap">Язык</span></li></ol>
+    <p>Приложение доступно на двенадцати языках.</p>
+    <h3>Шаги не приходят из приложения «Здоровье»</h3>
+    <p>Счётчик шагов работает от датчика движения iPhone даже без приложения «Здоровье». Чтобы разрешить приложению читать данные «Здоровья»: откройте приложение «Здоровье» от Apple, коснитесь фото профиля, откройте список приложений в разделе конфиденциальности, выберите Dr Strong и включите то, чем хотите поделиться. Приложение только читает данные «Здоровья» и никогда ничего туда не записывает.</p>
+    <h3>Зачем приложению камера, фото или движение?</h3>
+    <p>Каждое разрешение нужно одной функции, и iOS спрашивает о нём, когда эта функция понадобится впервые. Камера сканирует штрихкоды на упакованных продуктах. Фото — чтобы выбрать фото профиля. Движение считает ваши шаги. «Здоровье» позволяет приложению читать ваши шаги и расстояние. Отказ в разрешении отключает только его функцию.</p>
+    <h3>«Сравнение с другими»: почему ещё нет рейтинга?</h3>
+    <p>Рейтинг рассчитывается раз в день, утром. Новый аккаунт получает место в рейтинге после первого ежедневного расчёта после его создания.</p>
+    <h3>Как работают группы шагов?</h3>
+    <p>Вы вступаете в группу по ссылке-приглашению, и основатель группы одобряет каждую заявку. Участники видят только ваше имя и ваши показатели шагов. Основатель может удалить любого участника, а любой участник может выйти в любое время.</p>
+    <h3>Это медицинское приложение?</h3>
+    <p>Нет. Dr Strong даёт общие рекомендации для здоровых привычек. Это не медицинское изделие, и оно не заменяет врача или диетолога. Референсные диапазоны анализов носят справочный характер, и для каждого указан источник.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Политика конфиденциальности (на английском)</a></p>
+  </section>
+  <section class="lang" id="ur" lang="ur" dir="rtl">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="زبان"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>اردو</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur" aria-current="true">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>سپورٹ</h1>
+    <p class="lede">سب سے زیادہ پوچھے جانے والے سوالات کے جوابات، اور ہم سے رابطے کا طریقہ۔</p>
+    <div class="contact">
+      <p>ہمیں ای میل کریں</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>اپنے آلے اور جو کچھ ہوا اس کی ٹھیک تفصیل بتائیں، اس سے جواب جلد ملتا ہے۔</p>
+    </div>
+    <h3>میں اپنا پاس ورڈ بھول گیا</h3>
+    <ol class="path" aria-label="راستہ"><li><span class="tap">ای میل کے ساتھ جاری رکھیں</span></li><li><span class="tap">اپنا ای میل لکھیں</span></li><li><span class="tap">پاس ورڈ بھول گئے؟</span></li></ol>
+    <p>ایپ آپ کے ای میل پر نیا پاس ورڈ بنانے کا لنک بھیجتی ہے؛ اسپام فولڈر بھی دیکھ لیں۔ اگر آپ Apple یا Google سے سائن ان کرتے ہیں تو یہاں آپ کے اکاؤنٹ کا کوئی پاس ورڈ نہیں، وہی بٹن دوبارہ استعمال کریں۔</p>
+    <h3>میں اپنا اکاؤنٹ کیسے حذف کروں؟</h3>
+    <ol class="path" aria-label="راستہ"><li><span class="tap">مزید</span></li><li><span class="tap">شخص کا آئیکن</span></li><li><span class="tap">اکاؤنٹ حذف کریں</span></li></ol>
+    <p>شخص کا آئیکن «مزید» ٹیب کے اوپر ہے اور آپ کی «پروفائل» کھولتا ہے۔ حذف کرنا مستقل ہے؛ کیا حذف ہوتا ہے اور کیا باقی رہتا ہے، یہ <a href="https://drstrong999.github.io/dr-strong-privacy/">پرائیویسی پالیسی</a> (انگریزی میں) میں درج ہے۔</p>
+    <h3>اپنے ڈیٹا کی کاپی کیسے حاصل کروں؟</h3>
+    <ol class="path" aria-label="راستہ"><li><span class="tap">مزید</span></li><li><span class="tap">گیئر کا آئیکن</span></li><li><span class="tap">پرائیویسی</span></li><li><span class="tap">میرا ڈیٹا ایکسپورٹ کریں</span></li></ol>
+    <p>ایپ آپ کے ڈیٹا کی JSON فائل بناتی ہے اور شیئر شیٹ کھولتی ہے، تاکہ آپ اسے محفوظ کریں یا جہاں چاہیں بھیجیں۔</p>
+    <h3>زبان کیسے بدلوں؟</h3>
+    <ol class="path" aria-label="راستہ"><li><span class="tap">مزید</span></li><li><span class="tap">گیئر کا آئیکن</span></li><li><span class="tap">زبان</span></li></ol>
+    <p>ایپ بارہ زبانوں میں دستیاب ہے۔</p>
+    <h3>میرے قدم Apple Health سے نظر نہیں آ رہے</h3>
+    <p>قدم گننے والا آپ کے iPhone کے حرکتی سینسر سے Apple Health کے بغیر بھی کام کرتا ہے۔ ایپ کو Apple Health پڑھنے کی اجازت دینے کے لیے: Apple کی Health ایپ کھولیں، اپنی پروفائل تصویر پر ٹیپ کریں، پرائیویسی کے حصے میں ایپس کی فہرست کھولیں، Dr Strong منتخب کریں اور جو شیئر کرنا چاہیں اسے آن کریں۔ ایپ Apple Health سے صرف پڑھتی ہے، اس میں کبھی کچھ نہیں لکھتی۔</p>
+    <h3>ایپ کیمرا، تصاویر یا حرکت کی اجازت کیوں مانگتی ہے؟</h3>
+    <p>ہر اجازت ایک ہی فیچر کے لیے ہے، اور iOS اسے پہلی بار تب مانگتا ہے جب اس فیچر کو ضرورت ہو۔ کیمرا پیک شدہ کھانوں کا بارکوڈ اسکین کرتا ہے۔ تصاویر پروفائل تصویر چننے کے لیے ہیں۔ حرکت آپ کے قدم گنتی ہے۔ Apple Health ایپ کو آپ کے قدم اور فاصلہ پڑھنے دیتا ہے۔ کوئی اجازت نہ دینے سے صرف اسی کا فیچر بند ہوتا ہے۔</p>
+    <h3>«دوسروں سے موازنہ»: ابھی درجہ کیوں نہیں؟</h3>
+    <p>درجہ بندی روزانہ ایک بار، صبح کے وقت ہوتی ہے۔ نیا اکاؤنٹ بننے کے بعد پہلی روزانہ درجہ بندی کے بعد اپنا درجہ حاصل کرتا ہے۔</p>
+    <h3>قدموں کے گروپ کیسے کام کرتے ہیں؟</h3>
+    <p>آپ دعوتی لنک کے ذریعے گروپ میں شامل ہوتے ہیں، اور گروپ کا بانی ہر درخواست منظور کرتا ہے۔ اراکین صرف آپ کا نام اور آپ کے قدموں کے اعداد دیکھتے ہیں۔ بانی کسی بھی رکن کو ہٹا سکتا ہے، اور کوئی بھی رکن کسی بھی وقت گروپ چھوڑ سکتا ہے۔</p>
+    <h3>کیا یہ طبی ایپ ہے؟</h3>
+    <p>نہیں۔ Dr Strong صحت مند عادات کے لیے عمومی رہنمائی دیتی ہے۔ یہ طبی آلہ نہیں ہے اور ڈاکٹر یا ماہرِ غذائیت کا متبادل نہیں۔ ٹیسٹوں کی حوالہ جاتی حدیں رہنمائی کے لیے ہیں، اور ہر ایک اپنا ماخذ بتاتی ہے۔</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">پرائیویسی پالیسی (انگریزی میں)</a></p>
+  </section>
+  <section class="lang" id="hi" lang="hi" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="भाषा"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>हिन्दी</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi" aria-current="true">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>सहायता</h1>
+    <p class="lede">सबसे ज़्यादा पूछे जाने वाले सवालों के जवाब, और हमसे संपर्क करने का तरीका।</p>
+    <div class="contact">
+      <p>हमें ईमेल करें</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>अपना डिवाइस और ठीक-ठीक क्या हुआ, बताएँ — इससे जवाब जल्दी मिलता है।</p>
+    </div>
+    <h3>मैं अपना पासवर्ड भूल गया</h3>
+    <ol class="path" aria-label="रास्ता"><li><span class="tap">ईमेल से जारी रखें</span></li><li><span class="tap">अपना ईमेल लिखें</span></li><li><span class="tap">पासवर्ड भूल गए?</span></li></ol>
+    <p>ऐप आपके ईमेल पर नया पासवर्ड बनाने का लिंक भेजता है; स्पैम फ़ोल्डर भी देख लें। अगर आप Apple या Google से साइन इन करते हैं, तो यहाँ आपके खाते का कोई पासवर्ड नहीं है — वही बटन फिर से इस्तेमाल करें।</p>
+    <h3>मैं अपना खाता कैसे हटाऊँ?</h3>
+    <ol class="path" aria-label="रास्ता"><li><span class="tap">और</span></li><li><span class="tap">व्यक्ति का आइकन</span></li><li><span class="tap">खाता हटाएं</span></li></ol>
+    <p>व्यक्ति का आइकन «और» टैब के ऊपर है और आपकी «प्रोफ़ाइल» खोलता है। हटाना स्थायी है; क्या हटता है और क्या बचता है, यह <a href="https://drstrong999.github.io/dr-strong-privacy/">गोपनीयता नीति</a> (अंग्रेज़ी में) में बताया गया है।</p>
+    <h3>मुझे अपने डेटा की कॉपी कैसे मिलेगी?</h3>
+    <ol class="path" aria-label="रास्ता"><li><span class="tap">और</span></li><li><span class="tap">गियर आइकन</span></li><li><span class="tap">गोपनीयता</span></li><li><span class="tap">मेरा डेटा निर्यात करें</span></li></ol>
+    <p>ऐप आपके डेटा की एक JSON फ़ाइल बनाता है और शेयर शीट खोलता है, ताकि आप उसे सेव करें या जहाँ चाहें भेजें।</p>
+    <h3>भाषा कैसे बदलूँ?</h3>
+    <ol class="path" aria-label="रास्ता"><li><span class="tap">और</span></li><li><span class="tap">गियर आइकन</span></li><li><span class="tap">भाषा</span></li></ol>
+    <p>ऐप बारह भाषाओं में उपलब्ध है।</p>
+    <h3>मेरे कदम Apple Health से नहीं दिख रहे</h3>
+    <p>कदम गिनने वाला आपके iPhone के मोशन सेंसर से Apple Health के बिना भी काम करता है। ऐप को Apple Health पढ़ने की अनुमति देने के लिए: Apple का Health ऐप खोलें, अपनी प्रोफ़ाइल तस्वीर पर टैप करें, गोपनीयता वाले हिस्से में ऐप्स की सूची खोलें, Dr Strong चुनें और जो साझा करना चाहें उसे चालू करें। ऐप Apple Health से केवल पढ़ता है, उसमें कभी कुछ नहीं लिखता।</p>
+    <h3>ऐप कैमरा, फ़ोटो या मोशन की अनुमति क्यों माँगता है?</h3>
+    <p>हर अनुमति एक ही सुविधा के लिए है, और iOS उसे पहली बार तब माँगता है जब उस सुविधा को ज़रूरत हो। कैमरा पैक किए गए खाने के बारकोड स्कैन करता है। फ़ोटो प्रोफ़ाइल तस्वीर चुनने के लिए हैं। मोशन आपके कदम गिनता है। Apple Health ऐप को आपके कदम और दूरी पढ़ने देता है। कोई अनुमति न देने से केवल उसकी सुविधा बंद होती है।</p>
+    <h3>«दूसरों से तुलना»: अभी रैंक क्यों नहीं?</h3>
+    <p>रैंकिंग दिन में एक बार, सुबह गिनी जाती है। नया खाता बनने के बाद की पहली दैनिक गणना के बाद उसकी रैंक दिखती है।</p>
+    <h3>कदम समूह कैसे काम करते हैं?</h3>
+    <p>आप आमंत्रण लिंक से किसी समूह में जुड़ते हैं, और समूह का संस्थापक हर अनुरोध को मंज़ूरी देता है। सदस्य केवल आपका नाम और आपके कदमों के आँकड़े देखते हैं। संस्थापक किसी भी सदस्य को हटा सकता है, और कोई भी सदस्य कभी भी समूह छोड़ सकता है।</p>
+    <h3>क्या यह मेडिकल ऐप है?</h3>
+    <p>नहीं। Dr Strong स्वस्थ आदतों के लिए सामान्य मार्गदर्शन देता है। यह चिकित्सा उपकरण नहीं है और डॉक्टर या आहार विशेषज्ञ की जगह नहीं लेता। जाँचों की संदर्भ सीमाएँ मार्गदर्शन के लिए हैं, और हर एक अपना स्रोत बताती है।</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">गोपनीयता नीति (अंग्रेज़ी में)</a></p>
+  </section>
+  <section class="lang" id="id" lang="id" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Bahasa"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>Bahasa Indonesia</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id" aria-current="true">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Bantuan</h1>
+    <p class="lede">Jawaban atas pertanyaan yang paling sering diajukan, dan cara menghubungi kami.</p>
+    <div class="contact">
+      <p>Kirim email ke</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Sebutkan perangkat Anda dan apa yang terjadi secara persis; jawaban akan lebih cepat.</p>
+    </div>
+    <h3>Saya lupa kata sandi</h3>
+    <ol class="path" aria-label="Jalur"><li><span class="tap">Lanjutkan dengan email</span></li><li><span class="tap">Ketik email Anda</span></li><li><span class="tap">Lupa kata sandi?</span></li></ol>
+    <p>Aplikasi mengirimkan tautan ke email Anda untuk membuat kata sandi baru; periksa juga folder spam. Jika Anda masuk dengan Apple atau Google, akun Anda tidak punya kata sandi di sini — gunakan tombol yang sama lagi.</p>
+    <h3>Bagaimana cara menghapus akun saya?</h3>
+    <ol class="path" aria-label="Jalur"><li><span class="tap">Lainnya</span></li><li><span class="tap">Ikon orang</span></li><li><span class="tap">Hapus akun</span></li></ol>
+    <p>Ikon orang ada di bagian atas tab “Lainnya” dan membuka “Profil” Anda. Penghapusan bersifat permanen; apa yang dihapus dan apa yang tersisa dijelaskan di <a href="https://drstrong999.github.io/dr-strong-privacy/">kebijakan privasi</a> (dalam bahasa Inggris).</p>
+    <h3>Bagaimana cara mendapatkan salinan data saya?</h3>
+    <ol class="path" aria-label="Jalur"><li><span class="tap">Lainnya</span></li><li><span class="tap">Ikon roda gigi</span></li><li><span class="tap">Privasi</span></li><li><span class="tap">Ekspor data saya</span></li></ol>
+    <p>Aplikasi membuat file JSON berisi data Anda dan membuka lembar bagikan, sehingga Anda bisa menyimpan atau mengirimkannya ke mana saja.</p>
+    <h3>Bagaimana cara mengganti bahasa?</h3>
+    <ol class="path" aria-label="Jalur"><li><span class="tap">Lainnya</span></li><li><span class="tap">Ikon roda gigi</span></li><li><span class="tap">Bahasa</span></li></ol>
+    <p>Aplikasi tersedia dalam dua belas bahasa.</p>
+    <h3>Langkah saya tidak muncul dari app Kesehatan</h3>
+    <p>Penghitung langkah bekerja dari sensor gerak iPhone bahkan tanpa app Kesehatan. Untuk mengizinkan aplikasi membaca data Kesehatan: buka app Kesehatan dari Apple, ketuk foto profil Anda, buka daftar app di bagian Privasi, pilih Dr Strong, lalu aktifkan apa yang ingin Anda bagikan. Aplikasi hanya membaca data Kesehatan; tidak pernah menulis ke dalamnya.</p>
+    <h3>Mengapa aplikasi meminta kamera, foto, atau gerakan?</h3>
+    <p>Setiap izin hanya untuk satu fitur, dan iOS memintanya saat fitur itu pertama kali membutuhkannya. Kamera memindai barcode pada makanan kemasan. Foto untuk memilih foto profil. Gerakan menghitung langkah Anda. App Kesehatan memungkinkan aplikasi membaca langkah dan jarak Anda. Menolak satu izin hanya menonaktifkan fiturnya.</p>
+    <h3>“Perbandingan dengan pengguna lain”: mengapa belum ada peringkat?</h3>
+    <p>Peringkat dihitung sekali sehari, pada pagi hari. Akun baru mendapatkan peringkatnya setelah perhitungan harian pertama sesudah akun dibuat.</p>
+    <h3>Bagaimana grup langkah bekerja?</h3>
+    <p>Anda bergabung ke grup melalui tautan undangan, dan pendiri grup menyetujui setiap permintaan. Anggota hanya melihat nama dan angka langkah Anda. Pendiri dapat mengeluarkan anggota mana pun, dan setiap anggota dapat keluar kapan saja.</p>
+    <h3>Apakah ini aplikasi medis?</h3>
+    <p>Tidak. Dr Strong memberikan panduan umum untuk kebiasaan sehat. Aplikasi ini bukan alat medis dan tidak menggantikan dokter atau ahli gizi. Rentang rujukan hasil lab bersifat panduan, dan masing-masing menyebutkan sumbernya.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Kebijakan privasi (dalam bahasa Inggris)</a></p>
+  </section>
+  <section class="lang" id="ja" lang="ja" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="言語"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>日本語</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja" aria-current="true">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>サポート</h1>
+    <p class="lede">よくある質問への回答と、お問い合わせ方法です。</p>
+    <div class="contact">
+      <p>お問い合わせ先</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>お使いの端末と、何が起きたかを具体的にお書きください。回答が早くなります。</p>
+    </div>
+    <h3>パスワードを忘れた</h3>
+    <ol class="path" aria-label="手順"><li><span class="tap">メールで続ける</span></li><li><span class="tap">メールアドレスを入力</span></li><li><span class="tap">パスワードをお忘れですか？</span></li></ol>
+    <p>新しいパスワードを設定するためのリンクがメールで届きます。迷惑メールフォルダも確認してください。AppleまたはGoogleでサインインしている場合、このアプリのパスワードはありません。同じボタンからもう一度サインインしてください。</p>
+    <h3>アカウントを削除するには？</h3>
+    <ol class="path" aria-label="手順"><li><span class="tap">その他</span></li><li><span class="tap">人のアイコン</span></li><li><span class="tap">アカウントを削除</span></li></ol>
+    <p>人のアイコンは「その他」タブの上部にあり、「プロフィール」を開きます。削除は取り消せません。削除されるものと残るものは<a href="https://drstrong999.github.io/dr-strong-privacy/">プライバシーポリシー</a>（英語）に記載しています。</p>
+    <h3>自分のデータのコピーを入手するには？</h3>
+    <ol class="path" aria-label="手順"><li><span class="tap">その他</span></li><li><span class="tap">歯車アイコン</span></li><li><span class="tap">プライバシー</span></li><li><span class="tap">データをエクスポート</span></li></ol>
+    <p>アプリがデータをJSONファイルにまとめ、共有シートを開きます。保存したり、好きな場所へ送ったりできます。</p>
+    <h3>言語を変更するには？</h3>
+    <ol class="path" aria-label="手順"><li><span class="tap">その他</span></li><li><span class="tap">歯車アイコン</span></li><li><span class="tap">言語</span></li></ol>
+    <p>アプリは12の言語に対応しています。</p>
+    <h3>ヘルスケアから歩数が表示されない</h3>
+    <p>歩数計は、ヘルスケアを使わなくてもiPhoneのモーションセンサーで動作します。ヘルスケアのデータの読み取りを許可するには、Appleの「ヘルスケア」アプリを開き、プロフィール写真をタップし、プライバシーの項目でアプリの一覧を開いてDr Strongを選び、共有したい項目をオンにしてください。アプリはヘルスケアのデータを読み取るだけで、書き込むことはありません。</p>
+    <h3>カメラ・写真・モーションへのアクセスを求めるのはなぜ？</h3>
+    <p>各許可はひとつの機能のためだけに使われ、その機能を初めて使うときにiOSが確認します。カメラは包装食品のバーコードを読み取ります。写真はプロフィール写真を選ぶときに使います。モーションは歩数を数えます。ヘルスケアは歩数と距離の読み取りに使います。許可しない場合、その機能だけが使えなくなります。</p>
+    <h3>「他のユーザーとの比較」にまだ順位が出ないのはなぜ？</h3>
+    <p>順位は1日1回、朝に計算されます。新しいアカウントは、作成後最初の日次計算のあとに順位が表示されます。</p>
+    <h3>歩数グループの仕組みは？</h3>
+    <p>招待リンクからグループに参加し、グループの作成者が各リクエストを承認します。メンバーに見えるのは、あなたの名前と歩数の数字だけです。作成者はどのメンバーも外すことができ、メンバーはいつでも退出できます。</p>
+    <h3>医療アプリですか？</h3>
+    <p>いいえ。Dr Strongは健康的な習慣のための一般的なガイドを提供します。医療機器ではなく、医師や管理栄養士の代わりにはなりません。検査の基準範囲は目安であり、それぞれ出典を示しています。</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">プライバシーポリシー（英語）</a></p>
+  </section>
+  <section class="lang" id="zh" lang="zh-Hans" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="语言"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>简体中文</span></summary><ul><li><a href="#en" lang="en" hreflang="en">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans" aria-current="true">简体中文</a></li></ul></details></div>
+    <h1>支持</h1>
+    <p class="lede">常见问题解答，以及联系我们的方式。</p>
+    <div class="contact">
+      <p>发送邮件至</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>请告诉我们您的设备和具体发生了什么，这样能更快得到回复。</p>
+    </div>
+    <h3>我忘记了密码</h3>
+    <ol class="path" aria-label="路径"><li><span class="tap">使用邮箱继续</span></li><li><span class="tap">输入您的邮箱</span></li><li><span class="tap">忘记密码？</span></li></ol>
+    <p>应用会向您的邮箱发送一个设置新密码的链接，也请检查垃圾邮件文件夹。如果您使用 Apple 或 Google 登录，您的账户在这里没有密码，请再次使用同一个按钮登录。</p>
+    <h3>如何删除我的账户？</h3>
+    <ol class="path" aria-label="路径"><li><span class="tap">更多</span></li><li><span class="tap">人物图标</span></li><li><span class="tap">删除账户</span></li></ol>
+    <p>人物图标位于“更多”标签页顶部，点按会打开“个人资料”。删除是永久性的；哪些数据会被删除、哪些会保留，请见<a href="https://drstrong999.github.io/dr-strong-privacy/">隐私政策</a>（英文）。</p>
+    <h3>如何获取我的数据副本？</h3>
+    <ol class="path" aria-label="路径"><li><span class="tap">更多</span></li><li><span class="tap">齿轮图标</span></li><li><span class="tap">隐私</span></li><li><span class="tap">导出我的数据</span></li></ol>
+    <p>应用会将您的数据生成一个 JSON 文件并打开共享面板，您可以保存或发送到任何地方。</p>
+    <h3>如何更改语言？</h3>
+    <ol class="path" aria-label="路径"><li><span class="tap">更多</span></li><li><span class="tap">齿轮图标</span></li><li><span class="tap">语言</span></li></ol>
+    <p>应用支持十二种语言。</p>
+    <h3>“健康”中的步数没有显示</h3>
+    <p>即使不使用“健康”，计步器也能通过 iPhone 的运动传感器工作。若要允许应用读取“健康”数据：打开 Apple 的“健康”应用，点按您的个人头像，在隐私部分打开应用列表，选择 Dr Strong，并打开您想共享的项目。应用只读取“健康”数据，从不写入。</p>
+    <h3>为什么应用需要相机、照片或运动权限？</h3>
+    <p>每项权限只用于一个功能，iOS 会在该功能第一次需要时询问。相机用于扫描包装食品上的条形码。照片用于选择个人头像。运动用于计算您的步数。“健康”让应用读取您的步数和距离。拒绝某项权限只会关闭对应的功能。</p>
+    <h3>“与其他用户比较”为什么还没有排名？</h3>
+    <p>排名每天计算一次，在早上进行。新账户会在创建后的第一次每日计算之后获得排名。</p>
+    <h3>步数小组如何运作？</h3>
+    <p>您通过邀请链接加入小组，小组创建者会审核每一个申请。成员只能看到您的名字和步数数据。创建者可以移除任何成员，任何成员也可以随时退出。</p>
+    <h3>这是医疗应用吗？</h3>
+    <p>不是。Dr Strong 为健康习惯提供一般性指导。它不是医疗器械，不能替代医生或营养师。化验的参考范围仅供参考，并且每一项都注明了来源。</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">隐私政策（英文）</a></p>
+  </section>
+  <section class="lang" id="en" lang="en" dir="ltr">
+    <div class="top"><div class="brand">Dr Strong</div><details class="langmenu"><summary aria-label="Language"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 12h18.4M12 2.8c2.6 2.6 3.9 5.7 3.9 9.2s-1.3 6.6-3.9 9.2c-2.6-2.6-3.9-5.7-3.9-9.2S9.4 5.4 12 2.8z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>English</span></summary><ul><li><a href="#en" lang="en" hreflang="en" aria-current="true">English</a></li><li><a href="#ar" lang="ar" hreflang="ar">العربية</a></li><li><a href="#fr" lang="fr" hreflang="fr">Français</a></li><li><a href="#es" lang="es" hreflang="es">Español</a></li><li><a href="#pt" lang="pt-BR" hreflang="pt-BR">Português</a></li><li><a href="#de" lang="de" hreflang="de">Deutsch</a></li><li><a href="#ru" lang="ru" hreflang="ru">Русский</a></li><li><a href="#ur" lang="ur" hreflang="ur">اردو</a></li><li><a href="#hi" lang="hi" hreflang="hi">हिन्दी</a></li><li><a href="#id" lang="id" hreflang="id">Bahasa Indonesia</a></li><li><a href="#ja" lang="ja" hreflang="ja">日本語</a></li><li><a href="#zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a></li></ul></details></div>
+    <h1>Support</h1>
+    <p class="lede">Answers to the questions people ask most, and how to reach us.</p>
+    <div class="contact">
+      <p>Email us at</p>
+      <a class="mail" href="mailto:abdullah@dr-strong.com?subject=Dr%20Strong%20support" dir="ltr">abdullah@dr-strong.com</a>
+      <p>Tell us your device and exactly what happened; it gets you an answer faster.</p>
+    </div>
+    <h3>I forgot my password</h3>
+    <ol class="path" aria-label="Path"><li><span class="tap">Continue with email</span></li><li><span class="tap">Type your email</span></li><li><span class="tap">Forgot your password?</span></li></ol>
+    <p>The app emails you a link to set a new password; check your junk folder too. If you sign in with Apple or Google, your account has no password here: use the same button again.</p>
+    <h3>How do I delete my account?</h3>
+    <ol class="path" aria-label="Path"><li><span class="tap">More</span></li><li><span class="tap">Person icon</span></li><li><span class="tap">Delete account</span></li></ol>
+    <p>The person icon is at the top of the More tab and opens your Profile. Deletion is permanent; what is deleted and what remains is set out in the <a href="https://drstrong999.github.io/dr-strong-privacy/">privacy policy</a>.</p>
+    <h3>How do I get a copy of my data?</h3>
+    <ol class="path" aria-label="Path"><li><span class="tap">More</span></li><li><span class="tap">Gear icon</span></li><li><span class="tap">Privacy</span></li><li><span class="tap">Export my data</span></li></ol>
+    <p>The app builds a JSON file of your data and opens the share sheet, so you can save it or send it wherever you like.</p>
+    <h3>How do I change the language?</h3>
+    <ol class="path" aria-label="Path"><li><span class="tap">More</span></li><li><span class="tap">Gear icon</span></li><li><span class="tap">Language</span></li></ol>
+    <p>The app is available in twelve languages.</p>
+    <h3>My steps don&#x27;t show from Apple Health</h3>
+    <p>The step counter works from your iPhone&#x27;s motion sensor even without Apple Health. To let the app read Apple Health:</p>
+    <ol class="path" aria-label="Path"><li><span class="tap">Health app</span></li><li><span class="tap">Your profile picture</span></li><li><span class="tap">Apps</span></li><li><span class="tap">Dr Strong</span></li></ol>
+    <p>Then turn on what you want to share. The app only reads from Apple Health; it never writes to it.</p>
+    <h3>Why does the app ask for the camera, photos or motion?</h3>
+    <p>Each permission serves one feature, and iOS asks the first time that feature needs it. The camera scans barcodes on packaged foods. Photos let you choose a profile picture. Motion counts your steps. Apple Health lets the app read your steps and distance. Turning one down affects only its feature.</p>
+    <h3>Compare with others says to check back tomorrow</h3>
+    <p>Rankings are calculated once a day, in the morning. A new account gets its ranking after the first daily calculation that follows its creation.</p>
+    <h3>How do step groups work?</h3>
+    <p>You join a group through an invite link, and the group&#x27;s founder approves each request. Members see only your name and your step figures. The founder can remove any member, and any member can leave at any time.</p>
+    <h3>Is this a medical app?</h3>
+    <p>No. Dr Strong gives general guidance for healthy habits. It is not a medical device and does not replace a doctor or a dietitian. Lab reference ranges are for guidance, and each one names its source.</p>
+    <p class="foot">© 2026 Dr Strong · <a href="https://drstrong999.github.io/dr-strong-privacy/">Privacy policy</a></p>
+  </section>
+</main>
+<script>
+  // تحسينٌ فقط: الصفحة تعمل كاملةً دونه. يغلق قائمة اللغات بعد الاختيار أو بضغطٍ خارجها،
+  // فلا يجدها المستخدم مفتوحةً حين يعود إلى لغةٍ سابقة.
+  document.addEventListener("click", function (e) {
+    document.querySelectorAll(".langmenu[open]").forEach(function (d) {
+      if (!d.contains(e.target) || e.target.closest("a")) d.removeAttribute("open");
+    });
+  });
+</script>
 </body>
 </html>
